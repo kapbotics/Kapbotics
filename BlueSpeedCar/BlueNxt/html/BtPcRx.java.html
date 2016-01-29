@@ -1,0 +1,113 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/1999/REC-html401-19991224/strict.dtd">
+<html>
+<head>
+<META http-equiv=Content-Type content="text/html; charset=UTF-8">
+<title>Exported from Notepad++</title>
+<style type="text/css">
+span {
+	font-family: 'Courier New';
+	font-size: 10pt;
+	color: #000000;
+}
+.sc0 {
+}
+.sc2 {
+	color: #008000;
+}
+.sc3 {
+	color: #008080;
+}
+.sc4 {
+	color: #FF8000;
+}
+.sc5 {
+	font-weight: bold;
+	color: #0000FF;
+}
+.sc10 {
+	font-weight: bold;
+	color: #000080;
+}
+.sc11 {
+}
+.sc16 {
+	color: #8000FF;
+}
+.sc17 {
+	font-weight: bold;
+	color: #008080;
+}
+</style>
+</head>
+<body>
+<div style="float: left; white-space: pre; line-height: 1; background: #FFFFFF; "><span class="sc2">//Copyright (c) 2013-2014, KapBotics
+//All rights reserved.
+//
+//This file is part of BlueNxt program.
+//
+//    BlueNXT is free software: you can redistribute it and/or modify
+//    it under the terms of the GNU General Public License as published by
+//    the Free Software Foundation, either version 3 of the License, or
+//    (at your option) any later version.
+//
+//    BlueNXT is distributed in the hope that it will be useful,
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//    GNU General Public License for more details.
+//
+//    You should have received a copy of the GNU General Public License
+//    along with BlueNXT.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+</span><span class="sc0">
+</span><span class="sc5">import</span><span class="sc0"> </span><span class="sc11">lejos</span><span class="sc10">.</span><span class="sc11">nxt</span><span class="sc10">.*;</span><span class="sc0">
+
+</span><span class="sc16">public</span><span class="sc0"> </span><span class="sc16">class</span><span class="sc0"> </span><span class="sc11">BtPcRx</span><span class="sc0"> </span><span class="sc10">{</span><span class="sc0">
+
+    </span><span class="sc16">public</span><span class="sc0"> </span><span class="sc16">static</span><span class="sc0"> </span><span class="sc11">DataExchange</span><span class="sc0"> </span><span class="sc11">DE</span><span class="sc10">;</span><span class="sc0">
+    </span><span class="sc16">public</span><span class="sc0"> </span><span class="sc16">static</span><span class="sc0"> </span><span class="sc11">ManageBtConn</span><span class="sc0"> </span><span class="sc11">BTC</span><span class="sc10">;</span><span class="sc0">
+    </span><span class="sc16">public</span><span class="sc0"> </span><span class="sc16">static</span><span class="sc0"> </span><span class="sc11">ManageNxtMotors</span><span class="sc0"> </span><span class="sc11">NXT_M</span><span class="sc10">;</span><span class="sc0">
+    </span><span class="sc16">public</span><span class="sc0"> </span><span class="sc16">static</span><span class="sc0"> </span><span class="sc11">ManageNxtSteering</span><span class="sc0"> </span><span class="sc11">NXT_S</span><span class="sc10">;</span><span class="sc0">
+    </span><span class="sc16">public</span><span class="sc0"> </span><span class="sc16">static</span><span class="sc0"> </span><span class="sc11">ManageSensors</span><span class="sc0"> </span><span class="sc11">NXT_NS</span><span class="sc10">;</span><span class="sc0">
+
+    </span><span class="sc3">/**
+     * </span><span class="sc17">@param</span><span class="sc3"> args
+     */</span><span class="sc0">
+    </span><span class="sc16">public</span><span class="sc0"> </span><span class="sc16">static</span><span class="sc0"> </span><span class="sc16">void</span><span class="sc0"> </span><span class="sc11">main</span><span class="sc10">(</span><span class="sc11">String</span><span class="sc10">[]</span><span class="sc0"> </span><span class="sc11">args</span><span class="sc10">)</span><span class="sc0"> </span><span class="sc10">{</span><span class="sc0">
+        </span><span class="sc11">DE</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc5">new</span><span class="sc0"> </span><span class="sc11">DataExchange</span><span class="sc10">();</span><span class="sc0">
+        </span><span class="sc11">BTC</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc5">new</span><span class="sc0"> </span><span class="sc11">ManageBtConn</span><span class="sc10">(</span><span class="sc11">DE</span><span class="sc10">);</span><span class="sc0">
+        </span><span class="sc11">NXT_M</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc5">new</span><span class="sc0"> </span><span class="sc11">ManageNxtMotors</span><span class="sc10">(</span><span class="sc11">DE</span><span class="sc10">);</span><span class="sc0">
+        </span><span class="sc11">NXT_S</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc5">new</span><span class="sc0"> </span><span class="sc11">ManageNxtSteering</span><span class="sc10">(</span><span class="sc11">DE</span><span class="sc10">);</span><span class="sc0">
+        </span><span class="sc11">NXT_NS</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc5">new</span><span class="sc0"> </span><span class="sc11">ManageSensors</span><span class="sc10">(</span><span class="sc0"> </span><span class="sc11">DE</span><span class="sc0"> </span><span class="sc10">);</span><span class="sc0">
+        
+        </span><span class="sc11">BTC</span><span class="sc10">.</span><span class="sc11">setPriority</span><span class="sc10">(</span><span class="sc11">Thread</span><span class="sc10">.</span><span class="sc11">MAX_PRIORITY</span><span class="sc10">);</span><span class="sc0">
+        </span><span class="sc11">NXT_S</span><span class="sc10">.</span><span class="sc11">setPriority</span><span class="sc10">(</span><span class="sc11">Thread</span><span class="sc10">.</span><span class="sc11">NORM_PRIORITY</span><span class="sc10">);</span><span class="sc0">
+        </span><span class="sc11">NXT_M</span><span class="sc10">.</span><span class="sc11">setPriority</span><span class="sc10">(</span><span class="sc11">Thread</span><span class="sc10">.</span><span class="sc11">NORM_PRIORITY</span><span class="sc10">);</span><span class="sc0">
+        </span><span class="sc11">NXT_NS</span><span class="sc10">.</span><span class="sc11">setPriority</span><span class="sc10">(</span><span class="sc11">Thread</span><span class="sc10">.</span><span class="sc11">NORM_PRIORITY</span><span class="sc10">);</span><span class="sc0">
+        
+        </span><span class="sc11">BTC</span><span class="sc10">.</span><span class="sc11">start</span><span class="sc10">();</span><span class="sc0">
+        </span><span class="sc11">NXT_S</span><span class="sc10">.</span><span class="sc11">start</span><span class="sc10">();</span><span class="sc0">
+        </span><span class="sc11">NXT_M</span><span class="sc10">.</span><span class="sc11">start</span><span class="sc10">();</span><span class="sc0">
+        </span><span class="sc11">NXT_NS</span><span class="sc10">.</span><span class="sc11">start</span><span class="sc10">();</span><span class="sc0">
+
+        </span><span class="sc11">LCD</span><span class="sc10">.</span><span class="sc11">clearDisplay</span><span class="sc10">();</span><span class="sc0">
+        </span><span class="sc5">while</span><span class="sc0"> </span><span class="sc10">(!</span><span class="sc11">Button</span><span class="sc10">.</span><span class="sc11">ESCAPE</span><span class="sc10">.</span><span class="sc11">isDown</span><span class="sc10">())</span><span class="sc0">
+        </span><span class="sc10">{</span><span class="sc0">
+            </span><span class="sc2">// let the thread run
+</span><span class="sc0">            </span><span class="sc5">if</span><span class="sc0"> </span><span class="sc10">(</span><span class="sc11">DE</span><span class="sc10">.</span><span class="sc11">getNxtCmd</span><span class="sc10">()==</span><span class="sc0"> </span><span class="sc11">DataExchange</span><span class="sc10">.</span><span class="sc11">EXIT_CMD</span><span class="sc10">)</span><span class="sc0">
+            </span><span class="sc10">{</span><span class="sc0">
+                </span><span class="sc5">if</span><span class="sc0"> </span><span class="sc10">(!(</span><span class="sc11">DE</span><span class="sc10">.</span><span class="sc11">isBTCdone</span><span class="sc10">()</span><span class="sc0"> </span><span class="sc10">&amp;&amp;</span><span class="sc0"> </span><span class="sc11">DE</span><span class="sc10">.</span><span class="sc11">isNXTdone</span><span class="sc10">()))</span><span class="sc0">
+                </span><span class="sc10">{</span><span class="sc0">
+                    </span><span class="sc2">// wait ...
+</span><span class="sc0">                </span><span class="sc10">}</span><span class="sc0">
+                </span><span class="sc5">else</span><span class="sc0">
+                    </span><span class="sc5">break</span><span class="sc10">;</span><span class="sc0"> </span><span class="sc2">// exit the thread.
+</span><span class="sc0">            </span><span class="sc10">}</span><span class="sc0">
+        </span><span class="sc10">};</span><span class="sc0">
+
+        </span><span class="sc11">LCD</span><span class="sc10">.</span><span class="sc11">clearDisplay</span><span class="sc10">();</span><span class="sc0">
+        </span><span class="sc11">System</span><span class="sc10">.</span><span class="sc11">exit</span><span class="sc10">(</span><span class="sc4">0</span><span class="sc10">);</span><span class="sc0">
+    </span><span class="sc10">}</span><span class="sc0">
+</span><span class="sc10">};</span><span class="sc0">
+
+
+</span></div></body>
+</html>

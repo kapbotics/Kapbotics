@@ -1,0 +1,291 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/1999/REC-html401-19991224/strict.dtd">
+<html>
+<head>
+<META http-equiv=Content-Type content="text/html; charset=UTF-8">
+<title>Exported from Notepad++</title>
+<style type="text/css">
+span {
+	font-family: 'Courier New';
+	font-size: 10pt;
+	color: #000000;
+}
+.sc0 {
+}
+.sc1 {
+	color: #008000;
+}
+.sc2 {
+	color: #008000;
+}
+.sc3 {
+	color: #008080;
+}
+.sc4 {
+	color: #FF8000;
+}
+.sc5 {
+	font-weight: bold;
+	color: #0000FF;
+}
+.sc10 {
+	font-weight: bold;
+	color: #000080;
+}
+.sc11 {
+}
+.sc16 {
+	color: #8000FF;
+}
+</style>
+</head>
+<body>
+<div style="float: left; white-space: pre; line-height: 1; background: #FFFFFF; "><span class="sc2">//Copyright (c) 2013-2014, KapBotics
+//All rights reserved.
+//
+//This file is part of BlueNxt program.
+//
+//    BlueNXT is free software: you can redistribute it and/or modify
+//    it under the terms of the GNU General Public License as published by
+//    the Free Software Foundation, either version 3 of the License, or
+//    (at your option) any later version.
+//
+//    BlueNXT is distributed in the hope that it will be useful,
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//    GNU General Public License for more details.
+//
+//    You should have received a copy of the GNU General Public License
+//    along with BlueNXT.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+</span><span class="sc0">
+</span><span class="sc16">public</span><span class="sc0"> </span><span class="sc16">class</span><span class="sc0"> </span><span class="sc11">DataExchange</span><span class="sc0"> </span><span class="sc10">{</span><span class="sc0">
+
+    </span><span class="sc1">/* 
+     * Thread Status Handling
+     */</span><span class="sc0"> 
+    </span><span class="sc16">private</span><span class="sc0"> </span><span class="sc16">boolean</span><span class="sc0"> </span><span class="sc11">_isBTCdone</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc5">false</span><span class="sc10">;</span><span class="sc0">
+    </span><span class="sc16">private</span><span class="sc0"> </span><span class="sc16">boolean</span><span class="sc0"> </span><span class="sc11">_isNXTdone</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc5">false</span><span class="sc10">;</span><span class="sc0">
+    </span><span class="sc16">private</span><span class="sc0"> </span><span class="sc16">boolean</span><span class="sc0"> </span><span class="sc11">_isUIdone</span><span class="sc0">  </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc5">false</span><span class="sc10">;</span><span class="sc0">
+    </span><span class="sc16">private</span><span class="sc0"> </span><span class="sc16">boolean</span><span class="sc0"> </span><span class="sc11">_isBtConn</span><span class="sc0">  </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc5">false</span><span class="sc10">;</span><span class="sc0">
+    
+    </span><span class="sc16">public</span><span class="sc0"> </span><span class="sc16">boolean</span><span class="sc0"> </span><span class="sc11">isBTCdone</span><span class="sc10">()</span><span class="sc0"> </span><span class="sc10">{</span><span class="sc0">
+        </span><span class="sc5">return</span><span class="sc0"> </span><span class="sc11">_isBTCdone</span><span class="sc10">;</span><span class="sc0">
+    </span><span class="sc10">}</span><span class="sc0">
+
+    </span><span class="sc16">public</span><span class="sc0"> </span><span class="sc16">void</span><span class="sc0"> </span><span class="sc11">setBTCdone</span><span class="sc10">(</span><span class="sc16">boolean</span><span class="sc0"> </span><span class="sc11">value</span><span class="sc10">)</span><span class="sc0"> </span><span class="sc10">{</span><span class="sc0">
+        </span><span class="sc11">_isBTCdone</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc11">value</span><span class="sc10">;</span><span class="sc0">
+    </span><span class="sc10">}</span><span class="sc0">
+
+    </span><span class="sc16">public</span><span class="sc0"> </span><span class="sc16">boolean</span><span class="sc0"> </span><span class="sc11">isNXTdone</span><span class="sc10">()</span><span class="sc0"> </span><span class="sc10">{</span><span class="sc0">
+        </span><span class="sc5">return</span><span class="sc0"> </span><span class="sc11">_isNXTdone</span><span class="sc10">;</span><span class="sc0">
+    </span><span class="sc10">}</span><span class="sc0">
+
+    </span><span class="sc16">public</span><span class="sc0"> </span><span class="sc16">void</span><span class="sc0"> </span><span class="sc11">setNXTdone</span><span class="sc10">(</span><span class="sc16">boolean</span><span class="sc0"> </span><span class="sc11">value</span><span class="sc10">)</span><span class="sc0"> </span><span class="sc10">{</span><span class="sc0">
+        </span><span class="sc16">synchronized</span><span class="sc10">(</span><span class="sc5">this</span><span class="sc10">)</span><span class="sc0">
+        </span><span class="sc10">{</span><span class="sc0"> </span><span class="sc11">_isNXTdone</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc11">value</span><span class="sc10">;</span><span class="sc0"> </span><span class="sc10">}</span><span class="sc0">
+    </span><span class="sc10">}</span><span class="sc0">
+
+    </span><span class="sc16">public</span><span class="sc0"> </span><span class="sc16">boolean</span><span class="sc0"> </span><span class="sc11">isUIdone</span><span class="sc10">()</span><span class="sc0"> </span><span class="sc10">{</span><span class="sc0">
+        </span><span class="sc5">return</span><span class="sc0"> </span><span class="sc11">_isUIdone</span><span class="sc10">;</span><span class="sc0">
+    </span><span class="sc10">}</span><span class="sc0">
+
+    </span><span class="sc16">public</span><span class="sc0"> </span><span class="sc16">void</span><span class="sc0"> </span><span class="sc11">setUIdone</span><span class="sc10">(</span><span class="sc16">boolean</span><span class="sc0"> </span><span class="sc11">value</span><span class="sc10">)</span><span class="sc0"> </span><span class="sc10">{</span><span class="sc0">
+        </span><span class="sc11">_isUIdone</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc11">value</span><span class="sc10">;</span><span class="sc0">
+    </span><span class="sc10">}</span><span class="sc0">
+
+    </span><span class="sc16">public</span><span class="sc0"> </span><span class="sc16">boolean</span><span class="sc0"> </span><span class="sc11">isBtConn</span><span class="sc10">()</span><span class="sc0"> </span><span class="sc10">{</span><span class="sc0">
+        </span><span class="sc5">return</span><span class="sc0"> </span><span class="sc11">_isBtConn</span><span class="sc10">;</span><span class="sc0">
+    </span><span class="sc10">}</span><span class="sc0">
+
+    </span><span class="sc16">public</span><span class="sc0"> </span><span class="sc16">void</span><span class="sc0"> </span><span class="sc11">setBtConn</span><span class="sc10">(</span><span class="sc16">boolean</span><span class="sc0"> </span><span class="sc11">value</span><span class="sc10">)</span><span class="sc0"> </span><span class="sc10">{</span><span class="sc0">
+        </span><span class="sc11">_isBtConn</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc11">value</span><span class="sc10">;</span><span class="sc0">
+    </span><span class="sc10">}</span><span class="sc0">
+
+    
+    </span><span class="sc1">/*
+     *  BT protocol handling
+     */</span><span class="sc0"> 
+    </span><span class="sc2">// Opcodes read/write
+</span><span class="sc0">    </span><span class="sc16">private</span><span class="sc0"> </span><span class="sc16">int</span><span class="sc0"> </span><span class="sc11">nxtDyntag</span><span class="sc10">,</span><span class="sc0"> </span><span class="sc11">nxtCmd</span><span class="sc10">,</span><span class="sc0"> </span><span class="sc11">nxtPos</span><span class="sc10">,</span><span class="sc0"> </span><span class="sc11">nxtSpeed</span><span class="sc10">,</span><span class="sc0"> </span><span class="sc11">nxtOpcode</span><span class="sc10">;</span><span class="sc0"> 
+
+    </span><span class="sc2">// Dyntag
+</span><span class="sc0">    </span><span class="sc16">public</span><span class="sc0"> </span><span class="sc16">static</span><span class="sc0"> </span><span class="sc16">final</span><span class="sc0"> </span><span class="sc16">int</span><span class="sc0"> </span><span class="sc11">MLTP</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc4">256</span><span class="sc10">;</span><span class="sc0">
+    </span><span class="sc16">public</span><span class="sc0"> </span><span class="sc16">static</span><span class="sc0"> </span><span class="sc16">final</span><span class="sc0"> </span><span class="sc16">int</span><span class="sc0"> </span><span class="sc11">MIN_DYN</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc4">0</span><span class="sc10">;</span><span class="sc0">
+    </span><span class="sc16">public</span><span class="sc0"> </span><span class="sc16">static</span><span class="sc0"> </span><span class="sc16">final</span><span class="sc0"> </span><span class="sc16">int</span><span class="sc0"> </span><span class="sc11">MAX_DYN</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc4">255</span><span class="sc10">;</span><span class="sc0">
+
+    </span><span class="sc2">// Special Commands
+</span><span class="sc0">    </span><span class="sc16">public</span><span class="sc0"> </span><span class="sc16">static</span><span class="sc0"> </span><span class="sc16">final</span><span class="sc0"> </span><span class="sc16">int</span><span class="sc0"> </span><span class="sc11">MIN_CMD</span><span class="sc0">     </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc11">MAX_DYN</span><span class="sc10">+</span><span class="sc4">1</span><span class="sc10">;</span><span class="sc0">
+    </span><span class="sc16">public</span><span class="sc0"> </span><span class="sc16">static</span><span class="sc0"> </span><span class="sc16">final</span><span class="sc0"> </span><span class="sc16">int</span><span class="sc0"> </span><span class="sc11">MAX_CMD</span><span class="sc0">     </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc11">MIN_DYN</span><span class="sc10">*</span><span class="sc11">MLTP</span><span class="sc10">-</span><span class="sc4">1</span><span class="sc10">;</span><span class="sc0">
+    </span><span class="sc16">public</span><span class="sc0"> </span><span class="sc16">static</span><span class="sc0"> </span><span class="sc16">final</span><span class="sc0"> </span><span class="sc16">int</span><span class="sc0"> </span><span class="sc11">NULL_CMD</span><span class="sc0">    </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc4">0</span><span class="sc10">;</span><span class="sc0">
+    </span><span class="sc16">public</span><span class="sc0"> </span><span class="sc16">static</span><span class="sc0"> </span><span class="sc16">final</span><span class="sc0"> </span><span class="sc16">int</span><span class="sc0"> </span><span class="sc11">STOP_CMD</span><span class="sc0">    </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc4">1</span><span class="sc10">;</span><span class="sc0">
+    </span><span class="sc16">public</span><span class="sc0"> </span><span class="sc16">static</span><span class="sc0"> </span><span class="sc16">final</span><span class="sc0"> </span><span class="sc16">int</span><span class="sc0"> </span><span class="sc11">CAL_CMD</span><span class="sc0">     </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc4">3</span><span class="sc10">;</span><span class="sc0">
+    </span><span class="sc16">public</span><span class="sc0"> </span><span class="sc16">static</span><span class="sc0"> </span><span class="sc16">final</span><span class="sc0"> </span><span class="sc16">int</span><span class="sc0"> </span><span class="sc11">START_CMD</span><span class="sc0">   </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc4">5</span><span class="sc10">;</span><span class="sc0">
+    </span><span class="sc16">public</span><span class="sc0"> </span><span class="sc16">static</span><span class="sc0"> </span><span class="sc16">final</span><span class="sc0"> </span><span class="sc16">int</span><span class="sc0"> </span><span class="sc11">SPDLEV_CMD</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc4">7</span><span class="sc10">;</span><span class="sc0">
+    </span><span class="sc16">public</span><span class="sc0"> </span><span class="sc16">static</span><span class="sc0"> </span><span class="sc16">final</span><span class="sc0"> </span><span class="sc16">int</span><span class="sc0"> </span><span class="sc11">FRWD_CMD</span><span class="sc0">    </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc4">11</span><span class="sc10">;</span><span class="sc0">
+    </span><span class="sc16">public</span><span class="sc0"> </span><span class="sc16">static</span><span class="sc0"> </span><span class="sc16">final</span><span class="sc0"> </span><span class="sc16">int</span><span class="sc0"> </span><span class="sc11">BKWD_CMD</span><span class="sc0">    </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc4">13</span><span class="sc10">;</span><span class="sc0">
+    </span><span class="sc16">public</span><span class="sc0"> </span><span class="sc16">static</span><span class="sc0"> </span><span class="sc16">final</span><span class="sc0"> </span><span class="sc16">int</span><span class="sc0"> </span><span class="sc11">LEFT_CMD</span><span class="sc0">    </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc4">15</span><span class="sc10">;</span><span class="sc0">
+    </span><span class="sc16">public</span><span class="sc0"> </span><span class="sc16">static</span><span class="sc0"> </span><span class="sc16">final</span><span class="sc0"> </span><span class="sc16">int</span><span class="sc0"> </span><span class="sc11">RIGHT_CMD</span><span class="sc0">   </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc4">17</span><span class="sc10">;</span><span class="sc0">
+    </span><span class="sc16">public</span><span class="sc0"> </span><span class="sc16">static</span><span class="sc0"> </span><span class="sc16">final</span><span class="sc0"> </span><span class="sc16">int</span><span class="sc0"> </span><span class="sc11">RELEASE_CMD</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc4">21</span><span class="sc10">;</span><span class="sc0">
+    </span><span class="sc16">public</span><span class="sc0"> </span><span class="sc16">static</span><span class="sc0"> </span><span class="sc16">final</span><span class="sc0"> </span><span class="sc16">int</span><span class="sc0"> </span><span class="sc11">OTHER3_CMD</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc4">23</span><span class="sc10">;</span><span class="sc0">
+    </span><span class="sc16">public</span><span class="sc0"> </span><span class="sc16">static</span><span class="sc0"> </span><span class="sc16">final</span><span class="sc0"> </span><span class="sc16">int</span><span class="sc0"> </span><span class="sc11">OTHER4_CMD</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc4">25</span><span class="sc10">;</span><span class="sc0">    
+    </span><span class="sc16">public</span><span class="sc0"> </span><span class="sc16">static</span><span class="sc0"> </span><span class="sc16">final</span><span class="sc0"> </span><span class="sc16">int</span><span class="sc0"> </span><span class="sc11">EXIT_CMD</span><span class="sc0">   </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc4">99</span><span class="sc10">;</span><span class="sc0">
+
+    </span><span class="sc2">// Turning Angle (Position)
+</span><span class="sc0">    </span><span class="sc16">public</span><span class="sc0"> </span><span class="sc16">static</span><span class="sc0"> </span><span class="sc16">final</span><span class="sc0"> </span><span class="sc16">int</span><span class="sc0"> </span><span class="sc11">MIN_POS_CMD</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc11">MAX_CMD</span><span class="sc0"> </span><span class="sc10">+</span><span class="sc0"> </span><span class="sc4">1</span><span class="sc10">;</span><span class="sc0">
+    </span><span class="sc16">public</span><span class="sc0"> </span><span class="sc16">static</span><span class="sc0"> </span><span class="sc16">final</span><span class="sc0"> </span><span class="sc16">int</span><span class="sc0"> </span><span class="sc11">MAX_POS_CMD</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc10">(</span><span class="sc11">MIN_POS_CMD</span><span class="sc10">)*(</span><span class="sc11">MLTP</span><span class="sc10">)-</span><span class="sc4">1</span><span class="sc10">;</span><span class="sc0">
+    </span><span class="sc16">public</span><span class="sc0"> </span><span class="sc16">static</span><span class="sc0"> </span><span class="sc16">final</span><span class="sc0"> </span><span class="sc16">int</span><span class="sc0"> </span><span class="sc11">MAX_TURN_ANGLE</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc4">60</span><span class="sc10">;</span><span class="sc0">    </span><span class="sc2">// deg
+</span><span class="sc0">    </span><span class="sc16">public</span><span class="sc0"> </span><span class="sc16">static</span><span class="sc0"> </span><span class="sc16">final</span><span class="sc0"> </span><span class="sc16">int</span><span class="sc0"> </span><span class="sc11">ANGULAR_RES</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc4">2</span><span class="sc10">;</span><span class="sc0">        </span><span class="sc2">// deg
+</span><span class="sc0">    </span><span class="sc16">public</span><span class="sc0"> </span><span class="sc16">static</span><span class="sc0"> </span><span class="sc16">final</span><span class="sc0"> </span><span class="sc16">double</span><span class="sc0"> </span><span class="sc11">ANGULAR_SHAFT</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc4">1.5</span><span class="sc10">;</span><span class="sc0"> 
+
+    </span><span class="sc2">// Front Wheel Steering
+</span><span class="sc0">    </span><span class="sc16">private</span><span class="sc0"> </span><span class="sc16">int</span><span class="sc0"> </span><span class="sc11">curSteerPos</span><span class="sc10">;</span><span class="sc0">
+
+    </span><span class="sc16">public</span><span class="sc0"> </span><span class="sc16">int</span><span class="sc0"> </span><span class="sc11">getCurSteerPos</span><span class="sc10">()</span><span class="sc0"> </span><span class="sc10">{</span><span class="sc0">
+        </span><span class="sc5">return</span><span class="sc0"> </span><span class="sc11">curSteerPos</span><span class="sc10">;</span><span class="sc0">
+    </span><span class="sc10">}</span><span class="sc0">
+
+    </span><span class="sc16">public</span><span class="sc0"> </span><span class="sc16">void</span><span class="sc0"> </span><span class="sc11">setCurSteerPos</span><span class="sc10">(</span><span class="sc16">int</span><span class="sc0"> </span><span class="sc11">value</span><span class="sc10">)</span><span class="sc0"> </span><span class="sc10">{</span><span class="sc0">
+        </span><span class="sc11">curSteerPos</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc11">value</span><span class="sc10">;</span><span class="sc0">
+    </span><span class="sc10">}</span><span class="sc0">   
+
+    </span><span class="sc2">// Back Wheel Speed
+</span><span class="sc0">    </span><span class="sc16">public</span><span class="sc0"> </span><span class="sc16">static</span><span class="sc0"> </span><span class="sc16">final</span><span class="sc0"> </span><span class="sc16">int</span><span class="sc0"> </span><span class="sc11">MIN_SPD_CMD</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc11">MIN_POS_CMD</span><span class="sc0"> </span><span class="sc10">+</span><span class="sc0"> </span><span class="sc4">1</span><span class="sc10">;</span><span class="sc0">
+    </span><span class="sc16">public</span><span class="sc0"> </span><span class="sc16">static</span><span class="sc0"> </span><span class="sc16">final</span><span class="sc0"> </span><span class="sc16">int</span><span class="sc0"> </span><span class="sc11">MAX_SPD_CMD</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc10">(</span><span class="sc11">MIN_SPD_CMD</span><span class="sc10">)*(</span><span class="sc11">MLTP</span><span class="sc10">)-</span><span class="sc4">1</span><span class="sc10">;</span><span class="sc0">
+    </span><span class="sc16">public</span><span class="sc0"> </span><span class="sc16">static</span><span class="sc0"> </span><span class="sc16">final</span><span class="sc0"> </span><span class="sc16">int</span><span class="sc0"> </span><span class="sc11">MIN_FRM_RADIUS</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc4">50</span><span class="sc10">;</span><span class="sc0"> 
+    </span><span class="sc16">public</span><span class="sc0"> </span><span class="sc16">static</span><span class="sc0"> </span><span class="sc16">final</span><span class="sc0"> </span><span class="sc16">int</span><span class="sc0"> </span><span class="sc11">MAX_FRM_RADIUS</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc4">90</span><span class="sc10">+</span><span class="sc4">150</span><span class="sc10">;</span><span class="sc0"> 
+        
+    </span><span class="sc2">// Used on NXT: Multipliers of incoming speed command
+</span><span class="sc0">    </span><span class="sc16">public</span><span class="sc0"> </span><span class="sc16">static</span><span class="sc0"> </span><span class="sc16">final</span><span class="sc0"> </span><span class="sc16">int</span><span class="sc0"> </span><span class="sc11">MIN_SPEED_LEVEL</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc4">2</span><span class="sc10">;</span><span class="sc0">
+    </span><span class="sc16">public</span><span class="sc0"> </span><span class="sc16">static</span><span class="sc0"> </span><span class="sc16">final</span><span class="sc0"> </span><span class="sc16">int</span><span class="sc0"> </span><span class="sc11">MAX_SPEED_LEVEL</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc4">7</span><span class="sc10">;</span><span class="sc0">
+    </span><span class="sc16">private</span><span class="sc0"> </span><span class="sc16">int</span><span class="sc0"> </span><span class="sc11">speedLevel</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc11">MIN_SPEED_LEVEL</span><span class="sc10">+</span><span class="sc4">2</span><span class="sc10">;</span><span class="sc0">
+    
+    </span><span class="sc16">public</span><span class="sc0"> </span><span class="sc16">int</span><span class="sc0"> </span><span class="sc11">getSpeedLevel</span><span class="sc10">()</span><span class="sc0"> </span><span class="sc10">{</span><span class="sc0">
+        </span><span class="sc5">return</span><span class="sc0"> </span><span class="sc11">speedLevel</span><span class="sc10">;</span><span class="sc0">
+    </span><span class="sc10">}</span><span class="sc0">
+
+    </span><span class="sc16">public</span><span class="sc0"> </span><span class="sc16">void</span><span class="sc0"> </span><span class="sc11">incSpeedLevel</span><span class="sc10">()</span><span class="sc0"> </span><span class="sc10">{</span><span class="sc0">
+        </span><span class="sc11">speedLevel</span><span class="sc0"> </span><span class="sc10">+=</span><span class="sc0"> </span><span class="sc4">1</span><span class="sc10">;</span><span class="sc0">
+        </span><span class="sc5">if</span><span class="sc0"> </span><span class="sc10">(</span><span class="sc11">speedLevel</span><span class="sc0"> </span><span class="sc10">&gt;</span><span class="sc0"> </span><span class="sc11">MAX_SPEED_LEVEL</span><span class="sc10">)</span><span class="sc0">
+            </span><span class="sc11">speedLevel</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc11">MIN_SPEED_LEVEL</span><span class="sc10">;</span><span class="sc0">
+    </span><span class="sc10">}</span><span class="sc0">
+    
+    </span><span class="sc2">// Object Creator 
+</span><span class="sc0">    </span><span class="sc16">public</span><span class="sc0"> </span><span class="sc11">DataExchange</span><span class="sc10">()</span><span class="sc0"> </span><span class="sc10">{</span><span class="sc0">
+        </span><span class="sc11">nxtDyntag</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc11">MIN_DYN</span><span class="sc10">;</span><span class="sc0">        </span><span class="sc2">// DynTag
+</span><span class="sc0">        </span><span class="sc11">nxtCmd</span><span class="sc0">    </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc11">NULL_CMD</span><span class="sc10">;</span><span class="sc0">       </span><span class="sc2">// Special Command
+</span><span class="sc0">        </span><span class="sc11">nxtPos</span><span class="sc0">    </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc11">MIN_POS_CMD</span><span class="sc10">;</span><span class="sc0">    </span><span class="sc2">// Turn Angle command
+</span><span class="sc0">        </span><span class="sc11">nxtSpeed</span><span class="sc0">  </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc11">MIN_SPD_CMD</span><span class="sc10">;</span><span class="sc0">    </span><span class="sc2">// Wheel Speed command
+</span><span class="sc0">        </span><span class="sc11">encodeNxtOpcode</span><span class="sc10">();</span><span class="sc0">          </span><span class="sc2">// Final Opcode
+</span><span class="sc0">    </span><span class="sc10">};</span><span class="sc0">
+
+    </span><span class="sc16">public</span><span class="sc0"> </span><span class="sc16">int</span><span class="sc0"> </span><span class="sc11">getNxtDyn</span><span class="sc10">()</span><span class="sc0"> </span><span class="sc10">{</span><span class="sc0">
+        </span><span class="sc5">return</span><span class="sc0"> </span><span class="sc11">nxtDyntag</span><span class="sc10">;</span><span class="sc0">
+    </span><span class="sc10">}</span><span class="sc0">
+
+    </span><span class="sc16">private</span><span class="sc0"> </span><span class="sc16">void</span><span class="sc0"> </span><span class="sc11">setNxtDyn</span><span class="sc10">(</span><span class="sc16">int</span><span class="sc0"> </span><span class="sc11">value</span><span class="sc10">)</span><span class="sc0"> </span><span class="sc10">{</span><span class="sc0">
+        </span><span class="sc11">nxtDyntag</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc11">value</span><span class="sc10">;</span><span class="sc0">
+    </span><span class="sc10">}</span><span class="sc0">
+
+    </span><span class="sc16">public</span><span class="sc0"> </span><span class="sc16">void</span><span class="sc0"> </span><span class="sc11">incNxtDyn</span><span class="sc10">()</span><span class="sc0"> </span><span class="sc10">{</span><span class="sc0">       
+        </span><span class="sc11">nxtDyntag</span><span class="sc0"> </span><span class="sc10">+=</span><span class="sc0"> </span><span class="sc4">1</span><span class="sc10">;</span><span class="sc0">
+
+        </span><span class="sc5">if</span><span class="sc0"> </span><span class="sc10">(</span><span class="sc11">nxtDyntag</span><span class="sc0"> </span><span class="sc10">&gt;</span><span class="sc0"> </span><span class="sc11">MAX_DYN</span><span class="sc10">)</span><span class="sc0">
+            </span><span class="sc11">nxtDyntag</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc11">MIN_DYN</span><span class="sc10">;</span><span class="sc0">
+
+        </span><span class="sc11">encodeNxtOpcode</span><span class="sc10">();</span><span class="sc0">  </span><span class="sc2">// Opcode
+</span><span class="sc0">    </span><span class="sc10">}</span><span class="sc0">
+
+    </span><span class="sc16">public</span><span class="sc0"> </span><span class="sc16">int</span><span class="sc0"> </span><span class="sc11">getNxtOpcode</span><span class="sc10">()</span><span class="sc0"> </span><span class="sc10">{</span><span class="sc0">
+        </span><span class="sc5">return</span><span class="sc0"> </span><span class="sc11">nxtOpcode</span><span class="sc10">;</span><span class="sc0">
+    </span><span class="sc10">}</span><span class="sc0">
+
+    </span><span class="sc16">public</span><span class="sc0"> </span><span class="sc16">void</span><span class="sc0"> </span><span class="sc11">encodeNxtOpcode</span><span class="sc10">()</span><span class="sc0"> </span><span class="sc10">{</span><span class="sc0">
+        </span><span class="sc11">nxtOpcode</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc11">nxtDyntag</span><span class="sc0"> </span><span class="sc10">+</span><span class="sc0"> </span><span class="sc11">nxtCmd</span><span class="sc10">*</span><span class="sc11">MLTP</span><span class="sc0"> </span><span class="sc10">+</span><span class="sc0"> </span><span class="sc11">nxtPos</span><span class="sc10">*</span><span class="sc11">MLTP</span><span class="sc10">*</span><span class="sc11">MLTP</span><span class="sc0"> </span><span class="sc10">+</span><span class="sc0"> </span><span class="sc11">nxtSpeed</span><span class="sc10">*</span><span class="sc11">MLTP</span><span class="sc10">*</span><span class="sc11">MLTP</span><span class="sc10">*</span><span class="sc11">MLTP</span><span class="sc10">;</span><span class="sc0">
+    </span><span class="sc10">}</span><span class="sc0">   
+
+    </span><span class="sc16">public</span><span class="sc0"> </span><span class="sc16">int</span><span class="sc0"> </span><span class="sc11">getNxtCmd</span><span class="sc10">()</span><span class="sc0"> </span><span class="sc10">{</span><span class="sc0">
+        </span><span class="sc5">return</span><span class="sc0"> </span><span class="sc11">nxtCmd</span><span class="sc10">;</span><span class="sc0">
+    </span><span class="sc10">}</span><span class="sc0">
+
+    </span><span class="sc16">public</span><span class="sc0"> </span><span class="sc16">void</span><span class="sc0"> </span><span class="sc11">setNxtCmd</span><span class="sc10">(</span><span class="sc16">int</span><span class="sc0"> </span><span class="sc11">value</span><span class="sc10">)</span><span class="sc0"> </span><span class="sc10">{</span><span class="sc0">
+        </span><span class="sc11">nxtCmd</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc11">value</span><span class="sc10">;</span><span class="sc0">
+        </span><span class="sc11">encodeNxtOpcode</span><span class="sc10">();</span><span class="sc0">  </span><span class="sc2">// Opcode
+</span><span class="sc0">    </span><span class="sc10">}</span><span class="sc0">
+
+    </span><span class="sc16">public</span><span class="sc0"> </span><span class="sc16">int</span><span class="sc0"> </span><span class="sc11">getNxtPos</span><span class="sc10">()</span><span class="sc0"> </span><span class="sc10">{</span><span class="sc0">
+        </span><span class="sc5">return</span><span class="sc0"> </span><span class="sc11">nxtPos</span><span class="sc10">;</span><span class="sc0">
+    </span><span class="sc10">}</span><span class="sc0">
+
+    </span><span class="sc16">public</span><span class="sc0"> </span><span class="sc16">void</span><span class="sc0"> </span><span class="sc11">setNxtPos</span><span class="sc10">(</span><span class="sc16">int</span><span class="sc0"> </span><span class="sc11">value</span><span class="sc10">)</span><span class="sc0"> </span><span class="sc10">{</span><span class="sc0">
+        </span><span class="sc11">nxtPos</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc11">value</span><span class="sc10">;</span><span class="sc0">
+        </span><span class="sc11">encodeNxtOpcode</span><span class="sc10">();</span><span class="sc0">  </span><span class="sc2">// Opcode
+</span><span class="sc0">    </span><span class="sc10">}</span><span class="sc0">
+
+    </span><span class="sc16">public</span><span class="sc0"> </span><span class="sc16">int</span><span class="sc0"> </span><span class="sc11">getNxtSpeed</span><span class="sc10">()</span><span class="sc0"> </span><span class="sc10">{</span><span class="sc0">
+        </span><span class="sc5">return</span><span class="sc0"> </span><span class="sc11">nxtSpeed</span><span class="sc10">;</span><span class="sc0">
+    </span><span class="sc10">}</span><span class="sc0">
+
+    </span><span class="sc16">public</span><span class="sc0"> </span><span class="sc16">void</span><span class="sc0"> </span><span class="sc11">setNxtSpeed</span><span class="sc10">(</span><span class="sc16">int</span><span class="sc0"> </span><span class="sc11">value</span><span class="sc10">)</span><span class="sc0"> </span><span class="sc10">{</span><span class="sc0">
+        </span><span class="sc11">nxtSpeed</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc11">value</span><span class="sc10">;</span><span class="sc0">
+        </span><span class="sc11">encodeNxtOpcode</span><span class="sc10">();</span><span class="sc0">  </span><span class="sc2">// Opcode
+</span><span class="sc0">    </span><span class="sc10">}</span><span class="sc0">
+
+    </span><span class="sc2">// PC-Transmitter: Transmit Special Commands
+</span><span class="sc0">    </span><span class="sc16">public</span><span class="sc0"> </span><span class="sc16">void</span><span class="sc0"> </span><span class="sc11">encodeSpecialCommands</span><span class="sc10">(</span><span class="sc16">int</span><span class="sc0"> </span><span class="sc11">cmdCode</span><span class="sc0"> </span><span class="sc1">/*cmd Code*/</span><span class="sc10">)</span><span class="sc0"> 
+    </span><span class="sc10">{</span><span class="sc0">           
+        </span><span class="sc16">synchronized</span><span class="sc10">(</span><span class="sc5">this</span><span class="sc10">)</span><span class="sc0">
+        </span><span class="sc10">{</span><span class="sc0">
+            </span><span class="sc2">// increment Dyntag
+</span><span class="sc0">            </span><span class="sc11">incNxtDyn</span><span class="sc10">();</span><span class="sc0">
+            
+            </span><span class="sc2">// set Code to transmit
+</span><span class="sc0">            </span><span class="sc11">setNxtCmd</span><span class="sc10">(</span><span class="sc0"> </span><span class="sc11">cmdCode</span><span class="sc0"> </span><span class="sc10">);</span><span class="sc0">
+        </span><span class="sc10">}</span><span class="sc0">
+    </span><span class="sc10">}</span><span class="sc0">
+    
+    
+    </span><span class="sc2">// NXT-Receiver: Decode Turn Angle and Speed
+</span><span class="sc0">    </span><span class="sc16">public</span><span class="sc0"> </span><span class="sc16">void</span><span class="sc0"> </span><span class="sc11">decodeTurnAngleAndSpeed</span><span class="sc10">(</span><span class="sc16">int</span><span class="sc0"> </span><span class="sc11">value</span><span class="sc10">)</span><span class="sc0"> 
+    </span><span class="sc10">{</span><span class="sc0">   
+        </span><span class="sc16">synchronized</span><span class="sc10">(</span><span class="sc5">this</span><span class="sc10">)</span><span class="sc0">
+        </span><span class="sc10">{</span><span class="sc0">
+            </span><span class="sc2">//nxtDyntag + nxtCmd*MLTP + nxtPos*MLTP*MLTP + nxtSpeed*MLTP*MLTP*MLTP;
+</span><span class="sc0">            </span><span class="sc16">int</span><span class="sc0"> </span><span class="sc11">opcode</span><span class="sc10">=</span><span class="sc11">value</span><span class="sc10">,</span><span class="sc0"> </span><span class="sc11">e_speed</span><span class="sc10">=-</span><span class="sc4">1</span><span class="sc10">,</span><span class="sc0"> </span><span class="sc11">e_pos</span><span class="sc10">=-</span><span class="sc4">1</span><span class="sc10">,</span><span class="sc0"> </span><span class="sc11">e_cmd</span><span class="sc10">=-</span><span class="sc4">1</span><span class="sc10">,</span><span class="sc0"> </span><span class="sc11">e_dyn</span><span class="sc10">=-</span><span class="sc4">1</span><span class="sc10">,</span><span class="sc0"> </span><span class="sc11">divider</span><span class="sc10">=</span><span class="sc11">MLTP</span><span class="sc10">*</span><span class="sc11">MLTP</span><span class="sc10">*</span><span class="sc11">MLTP</span><span class="sc10">;</span><span class="sc0">
+
+            </span><span class="sc2">// extrapolate NXT wheel speed
+</span><span class="sc0">            </span><span class="sc11">e_speed</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc10">(</span><span class="sc11">opcode</span><span class="sc0"> </span><span class="sc10">-</span><span class="sc0"> </span><span class="sc10">(</span><span class="sc11">opcode</span><span class="sc0"> </span><span class="sc10">%</span><span class="sc0"> </span><span class="sc11">divider</span><span class="sc10">))/</span><span class="sc11">divider</span><span class="sc10">;</span><span class="sc0">
+            </span><span class="sc11">opcode</span><span class="sc0"> </span><span class="sc10">-=</span><span class="sc0"> </span><span class="sc11">e_speed</span><span class="sc10">*</span><span class="sc11">divider</span><span class="sc10">;</span><span class="sc0"> 
+            </span><span class="sc11">divider</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc11">MLTP</span><span class="sc10">*</span><span class="sc11">MLTP</span><span class="sc10">;</span><span class="sc0">
+
+            </span><span class="sc2">// extrapolate NXT turn-angle (with offset)
+</span><span class="sc0">            </span><span class="sc11">e_pos</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc10">(</span><span class="sc11">opcode</span><span class="sc0"> </span><span class="sc10">-</span><span class="sc0"> </span><span class="sc10">(</span><span class="sc11">opcode</span><span class="sc0"> </span><span class="sc10">%</span><span class="sc0"> </span><span class="sc11">divider</span><span class="sc10">))/</span><span class="sc11">divider</span><span class="sc10">;</span><span class="sc0">
+            </span><span class="sc11">opcode</span><span class="sc0"> </span><span class="sc10">-=</span><span class="sc0"> </span><span class="sc11">e_pos</span><span class="sc10">*</span><span class="sc11">divider</span><span class="sc10">;</span><span class="sc0">
+            </span><span class="sc11">e_pos</span><span class="sc0"> </span><span class="sc10">-=</span><span class="sc0"> </span><span class="sc11">MAX_TURN_ANGLE</span><span class="sc10">;</span><span class="sc0">    </span><span class="sc2">// remove offset
+</span><span class="sc0">            </span><span class="sc11">divider</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc11">MLTP</span><span class="sc10">;</span><span class="sc0">
+
+            </span><span class="sc2">// extrapolate NXT command
+</span><span class="sc0">            </span><span class="sc11">e_cmd</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc10">(</span><span class="sc11">opcode</span><span class="sc0"> </span><span class="sc10">-</span><span class="sc0"> </span><span class="sc10">(</span><span class="sc11">opcode</span><span class="sc0"> </span><span class="sc10">%</span><span class="sc0"> </span><span class="sc11">divider</span><span class="sc10">))/</span><span class="sc11">divider</span><span class="sc10">;</span><span class="sc0">
+            </span><span class="sc11">opcode</span><span class="sc0"> </span><span class="sc10">-=</span><span class="sc0"> </span><span class="sc11">e_cmd</span><span class="sc10">*</span><span class="sc11">divider</span><span class="sc10">;</span><span class="sc0">
+
+            </span><span class="sc2">// extrapolate Dyntag
+</span><span class="sc0">            </span><span class="sc11">e_dyn</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc11">opcode</span><span class="sc10">;</span><span class="sc0">
+
+            </span><span class="sc11">setNxtSpeed</span><span class="sc10">(</span><span class="sc11">e_speed</span><span class="sc10">);</span><span class="sc0"> 
+            </span><span class="sc11">setNxtPos</span><span class="sc10">(</span><span class="sc11">e_pos</span><span class="sc10">);</span><span class="sc0">
+            </span><span class="sc11">setNxtCmd</span><span class="sc10">(</span><span class="sc11">e_cmd</span><span class="sc10">);</span><span class="sc0">
+            </span><span class="sc11">setNxtDyn</span><span class="sc10">(</span><span class="sc11">e_dyn</span><span class="sc10">);</span><span class="sc0">
+        </span><span class="sc10">}</span><span class="sc0">
+    </span><span class="sc10">}</span><span class="sc0">   
+    
+    
+    </span><span class="sc3">/**
+     * Obstacle Detection
+     * */</span><span class="sc0">
+    </span><span class="sc16">public</span><span class="sc0"> </span><span class="sc16">static</span><span class="sc0"> </span><span class="sc16">final</span><span class="sc0"> </span><span class="sc16">int</span><span class="sc0"> </span><span class="sc11">MIN_DIST_2_OBJ</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0">  </span><span class="sc4">20</span><span class="sc10">;</span><span class="sc0">
+    
+    </span><span class="sc16">private</span><span class="sc0"> </span><span class="sc16">int</span><span class="sc0"> </span><span class="sc11">nxtDetectedDistance</span><span class="sc10">;</span><span class="sc0">
+    
+    </span><span class="sc16">void</span><span class="sc0"> </span><span class="sc11">setDistance</span><span class="sc10">(</span><span class="sc0"> </span><span class="sc16">int</span><span class="sc0"> </span><span class="sc11">value</span><span class="sc0"> </span><span class="sc10">)</span><span class="sc0"> </span><span class="sc10">{</span><span class="sc0"> </span><span class="sc11">nxtDetectedDistance</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc11">value</span><span class="sc10">;</span><span class="sc0"> </span><span class="sc10">};</span><span class="sc0">
+    
+    </span><span class="sc16">int</span><span class="sc0"> </span><span class="sc11">getDistance</span><span class="sc10">()</span><span class="sc0"> </span><span class="sc10">{</span><span class="sc0"> </span><span class="sc5">return</span><span class="sc0"> </span><span class="sc11">nxtDetectedDistance</span><span class="sc10">;</span><span class="sc0"> </span><span class="sc10">};</span><span class="sc0">
+</span><span class="sc10">};</span></div></body>
+</html>

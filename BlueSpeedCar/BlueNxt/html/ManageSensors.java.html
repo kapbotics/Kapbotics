@@ -1,0 +1,101 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/1999/REC-html401-19991224/strict.dtd">
+<html>
+<head>
+<META http-equiv=Content-Type content="text/html; charset=UTF-8">
+<title>Exported from Notepad++</title>
+<style type="text/css">
+span {
+	font-family: 'Courier New';
+	font-size: 10pt;
+	color: #000000;
+}
+.sc0 {
+}
+.sc2 {
+	color: #008000;
+}
+.sc4 {
+	color: #FF8000;
+}
+.sc5 {
+	font-weight: bold;
+	color: #0000FF;
+}
+.sc10 {
+	font-weight: bold;
+	color: #000080;
+}
+.sc11 {
+}
+.sc16 {
+	color: #8000FF;
+}
+</style>
+</head>
+<body>
+<div style="float: left; white-space: pre; line-height: 1; background: #FFFFFF; "><span class="sc2">//Copyright (c) 2013-2014, KapBotics
+//All rights reserved.
+//
+//This file is part of BlueNxt program.
+//
+//    BlueNXT is free software: you can redistribute it and/or modify
+//    it under the terms of the GNU General Public License as published by
+//    the Free Software Foundation, either version 3 of the License, or
+//    (at your option) any later version.
+//
+//    BlueNXT is distributed in the hope that it will be useful,
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//    GNU General Public License for more details.
+//
+//    You should have received a copy of the GNU General Public License
+//    along with BlueNXT.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+</span><span class="sc0">
+</span><span class="sc5">import</span><span class="sc0"> </span><span class="sc11">lejos</span><span class="sc10">.</span><span class="sc11">nxt</span><span class="sc10">.*;</span><span class="sc0">
+
+</span><span class="sc16">public</span><span class="sc0"> </span><span class="sc16">class</span><span class="sc0"> </span><span class="sc11">ManageSensors</span><span class="sc0"> </span><span class="sc5">extends</span><span class="sc0"> </span><span class="sc11">Thread</span><span class="sc0"> </span><span class="sc10">{</span><span class="sc0">
+
+    </span><span class="sc16">private</span><span class="sc0"> </span><span class="sc11">DataExchange</span><span class="sc0"> </span><span class="sc11">DEObj</span><span class="sc10">;</span><span class="sc0">
+    </span><span class="sc16">private</span><span class="sc0"> </span><span class="sc16">int</span><span class="sc0"> </span><span class="sc11">newCmd</span><span class="sc10">;</span><span class="sc0">
+    </span><span class="sc16">private</span><span class="sc0"> </span><span class="sc11">UltrasonicSensor</span><span class="sc0"> </span><span class="sc11">nxtSonar</span><span class="sc10">;</span><span class="sc0">
+
+    </span><span class="sc16">public</span><span class="sc0"> </span><span class="sc11">ManageSensors</span><span class="sc10">(</span><span class="sc0"> </span><span class="sc11">DataExchange</span><span class="sc0"> </span><span class="sc11">DE</span><span class="sc0"> </span><span class="sc10">)</span><span class="sc0"> 
+    </span><span class="sc10">{</span><span class="sc0">
+        </span><span class="sc2">// initialize variables
+</span><span class="sc0">        </span><span class="sc11">DEObj</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc11">DE</span><span class="sc10">;</span><span class="sc0">
+        </span><span class="sc11">newCmd</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc11">DEObj</span><span class="sc10">.</span><span class="sc11">getNxtCmd</span><span class="sc10">();</span><span class="sc0"> 
+        </span><span class="sc11">nxtSonar</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc5">new</span><span class="sc0"> </span><span class="sc11">UltrasonicSensor</span><span class="sc10">(</span><span class="sc11">SensorPort</span><span class="sc10">.</span><span class="sc11">S1</span><span class="sc10">);</span><span class="sc0">
+        </span><span class="sc11">nxtSonar</span><span class="sc10">.</span><span class="sc11">continuous</span><span class="sc10">();</span><span class="sc0">
+    </span><span class="sc10">};</span><span class="sc0">
+    
+    </span><span class="sc16">public</span><span class="sc0"> </span><span class="sc16">void</span><span class="sc0"> </span><span class="sc11">run</span><span class="sc10">()</span><span class="sc0"> 
+    </span><span class="sc10">{</span><span class="sc0">
+        </span><span class="sc16">int</span><span class="sc0"> </span><span class="sc11">nxtUltraSonicDist</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc4">0</span><span class="sc10">;</span><span class="sc0">
+
+        </span><span class="sc2">// infinite task
+</span><span class="sc0">        </span><span class="sc5">while</span><span class="sc0"> </span><span class="sc10">((</span><span class="sc11">newCmd</span><span class="sc0"> </span><span class="sc10">!=</span><span class="sc0"> </span><span class="sc11">DataExchange</span><span class="sc10">.</span><span class="sc11">EXIT_CMD</span><span class="sc10">))</span><span class="sc0">
+        </span><span class="sc10">{</span><span class="sc0">
+            </span><span class="sc16">synchronized</span><span class="sc10">(</span><span class="sc5">this</span><span class="sc10">)</span><span class="sc0">
+            </span><span class="sc10">{</span><span class="sc0">
+                </span><span class="sc2">// retrieve distance from object
+</span><span class="sc0">                </span><span class="sc11">nxtUltraSonicDist</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc11">nxtSonar</span><span class="sc10">.</span><span class="sc11">getDistance</span><span class="sc10">();</span><span class="sc0">
+                </span><span class="sc11">DEObj</span><span class="sc10">.</span><span class="sc11">setDistance</span><span class="sc10">(</span><span class="sc11">nxtUltraSonicDist</span><span class="sc10">);</span><span class="sc0">
+            </span><span class="sc10">};</span><span class="sc0">
+            
+            </span><span class="sc2">// Beep to alert!
+</span><span class="sc0">            </span><span class="sc5">if</span><span class="sc0"> </span><span class="sc10">(</span><span class="sc11">nxtUltraSonicDist</span><span class="sc0"> </span><span class="sc10">&lt;=</span><span class="sc0"> </span><span class="sc4">2</span><span class="sc10">*</span><span class="sc11">DataExchange</span><span class="sc10">.</span><span class="sc11">MIN_DIST_2_OBJ</span><span class="sc10">)</span><span class="sc0">
+                </span><span class="sc11">Sound</span><span class="sc10">.</span><span class="sc11">beep</span><span class="sc10">();</span><span class="sc0">
+                        
+            </span><span class="sc5">try</span><span class="sc0"> </span><span class="sc10">{</span><span class="sc0">
+                </span><span class="sc11">Thread</span><span class="sc10">.</span><span class="sc11">sleep</span><span class="sc10">(</span><span class="sc4">250</span><span class="sc10">);</span><span class="sc0">
+            </span><span class="sc10">}</span><span class="sc0"> 
+            </span><span class="sc5">catch</span><span class="sc0"> </span><span class="sc10">(</span><span class="sc11">InterruptedException</span><span class="sc0"> </span><span class="sc11">e</span><span class="sc10">)</span><span class="sc0"> </span><span class="sc10">{</span><span class="sc0">
+                </span><span class="sc11">e</span><span class="sc10">.</span><span class="sc11">printStackTrace</span><span class="sc10">();</span><span class="sc0">
+            </span><span class="sc10">}</span><span class="sc0">
+        </span><span class="sc10">}</span><span class="sc0">
+        
+        </span><span class="sc11">DEObj</span><span class="sc10">.</span><span class="sc11">setNXTdone</span><span class="sc10">(</span><span class="sc5">true</span><span class="sc10">);</span><span class="sc0">
+    </span><span class="sc10">};</span><span class="sc0">
+</span><span class="sc10">}</span><span class="sc0">
+</span></div></body>
+</html>

@@ -1,0 +1,190 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/1999/REC-html401-19991224/strict.dtd">
+<html>
+<head>
+<META http-equiv=Content-Type content="text/html; charset=UTF-8">
+<title>Exported from Notepad++</title>
+<style type="text/css">
+span {
+	font-family: 'Courier New';
+	font-size: 10pt;
+	color: #000000;
+}
+.sc0 {
+}
+.sc1 {
+	color: #008000;
+}
+.sc2 {
+	color: #008000;
+}
+.sc4 {
+	color: #FF8000;
+}
+.sc5 {
+	font-weight: bold;
+	color: #0000FF;
+}
+.sc6 {
+	color: #808080;
+}
+.sc10 {
+	font-weight: bold;
+	color: #000080;
+}
+.sc11 {
+}
+.sc16 {
+	color: #8000FF;
+}
+</style>
+</head>
+<body>
+<div style="float: left; white-space: pre; line-height: 1; background: #FFFFFF; "><span class="sc2">//Copyright (c) 2013-2014, KapBotics
+//All rights reserved.
+//
+//This file is part of BlueNxt program.
+//
+//    BlueNXT is free software: you can redistribute it and/or modify
+//    it under the terms of the GNU General Public License as published by
+//    the Free Software Foundation, either version 3 of the License, or
+//    (at your option) any later version.
+//
+//    BlueNXT is distributed in the hope that it will be useful,
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//    GNU General Public License for more details.
+//
+//    You should have received a copy of the GNU General Public License
+//    along with BlueNXT.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+</span><span class="sc0">
+</span><span class="sc5">import</span><span class="sc0"> </span><span class="sc11">lejos</span><span class="sc10">.</span><span class="sc11">nxt</span><span class="sc10">.*;</span><span class="sc0">
+</span><span class="sc5">import</span><span class="sc0"> </span><span class="sc11">lejos</span><span class="sc10">.</span><span class="sc11">robotics</span><span class="sc10">.</span><span class="sc11">RegulatedMotor</span><span class="sc10">;</span><span class="sc0">
+
+</span><span class="sc16">public</span><span class="sc0"> </span><span class="sc16">class</span><span class="sc0"> </span><span class="sc11">ManageNxtSteering</span><span class="sc0"> </span><span class="sc5">extends</span><span class="sc0"> </span><span class="sc11">Thread</span><span class="sc0"> </span><span class="sc10">{</span><span class="sc0">
+
+    </span><span class="sc16">private</span><span class="sc0"> </span><span class="sc11">DataExchange</span><span class="sc0"> </span><span class="sc11">DEObj</span><span class="sc10">;</span><span class="sc0">
+
+    </span><span class="sc16">private</span><span class="sc0"> </span><span class="sc16">static</span><span class="sc0"> </span><span class="sc11">RegulatedMotor</span><span class="sc0"> </span><span class="sc11">centreMotor</span><span class="sc10">;</span><span class="sc0"> 
+
+    </span><span class="sc16">private</span><span class="sc0"> </span><span class="sc16">static</span><span class="sc0"> </span><span class="sc16">int</span><span class="sc0"> </span><span class="sc11">oldDyn</span><span class="sc10">;</span><span class="sc0">
+    </span><span class="sc16">private</span><span class="sc0"> </span><span class="sc16">static</span><span class="sc0"> </span><span class="sc16">int</span><span class="sc0"> </span><span class="sc11">newDyn</span><span class="sc10">;</span><span class="sc0">
+    </span><span class="sc16">private</span><span class="sc0"> </span><span class="sc16">static</span><span class="sc0"> </span><span class="sc16">int</span><span class="sc0"> </span><span class="sc11">newCmd</span><span class="sc10">;</span><span class="sc0">
+    </span><span class="sc16">private</span><span class="sc0"> </span><span class="sc16">static</span><span class="sc0"> </span><span class="sc16">int</span><span class="sc0"> </span><span class="sc11">curPos</span><span class="sc10">,</span><span class="sc0"> </span><span class="sc11">newPos</span><span class="sc10">;</span><span class="sc0">
+    </span><span class="sc16">private</span><span class="sc0"> </span><span class="sc16">static</span><span class="sc0"> </span><span class="sc16">boolean</span><span class="sc0"> </span><span class="sc11">isNxtStop</span><span class="sc10">,</span><span class="sc0"> </span><span class="sc11">isNxtCalib</span><span class="sc10">;</span><span class="sc0">
+    </span><span class="sc16">private</span><span class="sc0"> </span><span class="sc16">static</span><span class="sc0"> </span><span class="sc16">final</span><span class="sc0"> </span><span class="sc16">int</span><span class="sc0"> </span><span class="sc11">MIN_STEER_SPD</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc4">800</span><span class="sc10">;</span><span class="sc0">
+
+    
+    </span><span class="sc16">public</span><span class="sc0"> </span><span class="sc11">ManageNxtSteering</span><span class="sc10">(</span><span class="sc0"> </span><span class="sc11">DataExchange</span><span class="sc0"> </span><span class="sc11">DE</span><span class="sc0"> </span><span class="sc10">)</span><span class="sc0"> </span><span class="sc10">{</span><span class="sc0">
+        </span><span class="sc2">// initialize variables
+</span><span class="sc0">        </span><span class="sc11">DEObj</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc11">DE</span><span class="sc10">;</span><span class="sc0">
+
+        </span><span class="sc11">centreMotor</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc11">Motor</span><span class="sc10">.</span><span class="sc11">B</span><span class="sc10">;</span><span class="sc0">
+        </span><span class="sc11">centreMotor</span><span class="sc10">.</span><span class="sc11">resetTachoCount</span><span class="sc10">();</span><span class="sc0">
+        </span><span class="sc11">curPos</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc11">centreMotor</span><span class="sc10">.</span><span class="sc11">getTachoCount</span><span class="sc10">();</span><span class="sc0">
+        </span><span class="sc11">centreMotor</span><span class="sc10">.</span><span class="sc11">setSpeed</span><span class="sc10">(</span><span class="sc11">MIN_STEER_SPD</span><span class="sc10">);</span><span class="sc0">
+        </span><span class="sc2">//centreMotor.setAcceleration(10000);
+</span><span class="sc0">        </span><span class="sc11">centreMotor</span><span class="sc10">.</span><span class="sc11">flt</span><span class="sc10">();</span><span class="sc0">
+
+        </span><span class="sc11">oldDyn</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc4">0</span><span class="sc10">;</span><span class="sc0"> 
+        </span><span class="sc11">newCmd</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc11">DataExchange</span><span class="sc10">.</span><span class="sc11">NULL_CMD</span><span class="sc10">;</span><span class="sc0">
+        </span><span class="sc11">isNxtStop</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc11">isNxtCalib</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc5">false</span><span class="sc10">;</span><span class="sc0">
+    </span><span class="sc10">};</span><span class="sc0">
+
+    
+    </span><span class="sc16">public</span><span class="sc0"> </span><span class="sc16">int</span><span class="sc0"> </span><span class="sc11">getDeltaPos</span><span class="sc10">(</span><span class="sc16">int</span><span class="sc0"> </span><span class="sc11">newP</span><span class="sc10">,</span><span class="sc0"> </span><span class="sc16">int</span><span class="sc0"> </span><span class="sc11">curP</span><span class="sc10">)</span><span class="sc0">
+    </span><span class="sc10">{</span><span class="sc0">
+        </span><span class="sc2">//int result = (int)((newP-curP)/DataExchange.ANGULAR_SHAFT);
+</span><span class="sc0">        </span><span class="sc16">int</span><span class="sc0"> </span><span class="sc11">result</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc10">(</span><span class="sc16">int</span><span class="sc10">)((</span><span class="sc11">newP</span><span class="sc10">-</span><span class="sc11">curP</span><span class="sc10">));</span><span class="sc0"> </span><span class="sc1">/* modified for kap.jeep.2 */</span><span class="sc0">  
+        </span><span class="sc5">return</span><span class="sc0"> </span><span class="sc11">result</span><span class="sc10">;</span><span class="sc0">
+    </span><span class="sc10">}</span><span class="sc0">
+    
+    
+    </span><span class="sc16">public</span><span class="sc0"> </span><span class="sc16">void</span><span class="sc0"> </span><span class="sc11">run</span><span class="sc10">()</span><span class="sc0"> </span><span class="sc10">{</span><span class="sc0">
+
+        </span><span class="sc2">// infinite task
+</span><span class="sc0">        </span><span class="sc5">while</span><span class="sc0"> </span><span class="sc10">(</span><span class="sc5">true</span><span class="sc10">)</span><span class="sc0">
+        </span><span class="sc10">{</span><span class="sc0">
+            </span><span class="sc2">// retrieve decoded opcode info
+</span><span class="sc0">            </span><span class="sc16">synchronized</span><span class="sc10">(</span><span class="sc5">this</span><span class="sc10">)</span><span class="sc0"> 
+            </span><span class="sc10">{</span><span class="sc0"> 
+                </span><span class="sc11">newDyn</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc11">DEObj</span><span class="sc10">.</span><span class="sc11">getNxtDyn</span><span class="sc10">();</span><span class="sc0">
+                </span><span class="sc11">newCmd</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc11">DEObj</span><span class="sc10">.</span><span class="sc11">getNxtCmd</span><span class="sc10">();</span><span class="sc0"> 
+                </span><span class="sc11">newPos</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc11">DEObj</span><span class="sc10">.</span><span class="sc11">getNxtPos</span><span class="sc10">();</span><span class="sc0">
+                </span><span class="sc11">curPos</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc11">centreMotor</span><span class="sc10">.</span><span class="sc11">getTachoCount</span><span class="sc10">();</span><span class="sc0">
+                </span><span class="sc11">DEObj</span><span class="sc10">.</span><span class="sc11">setCurSteerPos</span><span class="sc10">(</span><span class="sc11">curPos</span><span class="sc10">);</span><span class="sc0">
+            </span><span class="sc10">};</span><span class="sc0">          
+
+            </span><span class="sc2">// steer to newPos, if conditions apply
+</span><span class="sc0">            </span><span class="sc5">if</span><span class="sc0"> </span><span class="sc10">((</span><span class="sc11">newCmd</span><span class="sc0"> </span><span class="sc10">!=</span><span class="sc0"> </span><span class="sc11">DataExchange</span><span class="sc10">.</span><span class="sc11">EXIT_CMD</span><span class="sc10">)</span><span class="sc0"> </span><span class="sc10">&amp;&amp;</span><span class="sc0"> </span><span class="sc10">(</span><span class="sc11">newCmd</span><span class="sc0"> </span><span class="sc10">!=</span><span class="sc0"> </span><span class="sc11">DataExchange</span><span class="sc10">.</span><span class="sc11">NULL_CMD</span><span class="sc10">))</span><span class="sc0">
+            </span><span class="sc10">{</span><span class="sc0">
+                </span><span class="sc5">if</span><span class="sc0"> </span><span class="sc10">(</span><span class="sc11">oldDyn</span><span class="sc0"> </span><span class="sc10">!=</span><span class="sc0"> </span><span class="sc11">newDyn</span><span class="sc10">)</span><span class="sc0">
+                </span><span class="sc10">{</span><span class="sc0">
+                    </span><span class="sc11">oldDyn</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc11">newDyn</span><span class="sc10">;</span><span class="sc0">
+
+                    </span><span class="sc5">switch</span><span class="sc0"> </span><span class="sc10">(</span><span class="sc11">newCmd</span><span class="sc10">)</span><span class="sc0">
+                    </span><span class="sc10">{</span><span class="sc0">
+                    </span><span class="sc5">case</span><span class="sc0"> </span><span class="sc11">DataExchange</span><span class="sc10">.</span><span class="sc11">STOP_CMD</span><span class="sc10">:</span><span class="sc0">
+                        </span><span class="sc11">isNxtStop</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc5">true</span><span class="sc10">;</span><span class="sc0">
+                        </span><span class="sc11">centreMotor</span><span class="sc10">.</span><span class="sc11">stop</span><span class="sc10">();</span><span class="sc0">
+                        </span><span class="sc5">break</span><span class="sc10">;</span><span class="sc0">
+                    </span><span class="sc5">case</span><span class="sc0"> </span><span class="sc11">DataExchange</span><span class="sc10">.</span><span class="sc11">CAL_CMD</span><span class="sc10">:</span><span class="sc0">
+                        </span><span class="sc11">centreMotor</span><span class="sc10">.</span><span class="sc11">rotate</span><span class="sc10">(</span><span class="sc11">getDeltaPos</span><span class="sc10">(</span><span class="sc11">newPos</span><span class="sc10">,</span><span class="sc11">curPos</span><span class="sc10">));</span><span class="sc0">
+                        </span><span class="sc11">LCD</span><span class="sc10">.</span><span class="sc11">clear</span><span class="sc10">(</span><span class="sc4">6</span><span class="sc10">);</span><span class="sc0">
+                        </span><span class="sc11">LCD</span><span class="sc10">.</span><span class="sc11">drawString</span><span class="sc10">(</span><span class="sc6">"CMD:: CALIBRATE"</span><span class="sc10">,</span><span class="sc4">0</span><span class="sc10">,</span><span class="sc4">6</span><span class="sc10">);</span><span class="sc0">
+                        </span><span class="sc5">break</span><span class="sc10">;</span><span class="sc0">
+                    </span><span class="sc5">case</span><span class="sc0"> </span><span class="sc11">DataExchange</span><span class="sc10">.</span><span class="sc11">START_CMD</span><span class="sc10">:</span><span class="sc0">
+                        </span><span class="sc11">isNxtStop</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc5">false</span><span class="sc10">;</span><span class="sc0">
+                        </span><span class="sc5">if</span><span class="sc0"> </span><span class="sc10">(</span><span class="sc11">isNxtCalib</span><span class="sc10">)</span><span class="sc0">
+                        </span><span class="sc10">{</span><span class="sc0">
+                            </span><span class="sc2">// calibration is done, the current TachoCount 
+</span><span class="sc0">                            </span><span class="sc2">// position becomes the reference, i.e. "0 deg".
+</span><span class="sc0">                            </span><span class="sc11">isNxtCalib</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc5">false</span><span class="sc10">;</span><span class="sc0">
+                            </span><span class="sc11">centreMotor</span><span class="sc10">.</span><span class="sc11">resetTachoCount</span><span class="sc10">();</span><span class="sc0">
+                            </span><span class="sc11">curPos</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc11">centreMotor</span><span class="sc10">.</span><span class="sc11">getTachoCount</span><span class="sc10">();</span><span class="sc0">
+                        </span><span class="sc10">}</span><span class="sc0">
+                        </span><span class="sc5">break</span><span class="sc10">;</span><span class="sc0">
+                    </span><span class="sc5">case</span><span class="sc0"> </span><span class="sc11">DataExchange</span><span class="sc10">.</span><span class="sc11">RELEASE_CMD</span><span class="sc10">:</span><span class="sc0">
+                        </span><span class="sc2">// when user releases the mouse drag, the vehicle attempts to recover a straight drive.
+</span><span class="sc0">                        </span><span class="sc2">// It simulates what happens naturally in a real car when the driver gets his hands off 
+</span><span class="sc0">                        </span><span class="sc2">// the steering upon exiting from a curve.
+</span><span class="sc0">                        </span><span class="sc11">centreMotor</span><span class="sc10">.</span><span class="sc11">rotateTo</span><span class="sc10">(</span><span class="sc4">0</span><span class="sc10">);</span><span class="sc0">                    
+                        </span><span class="sc5">break</span><span class="sc10">;</span><span class="sc0">
+                    </span><span class="sc5">case</span><span class="sc0"> </span><span class="sc11">DataExchange</span><span class="sc10">.</span><span class="sc11">FRWD_CMD</span><span class="sc10">:</span><span class="sc0">
+                    </span><span class="sc5">case</span><span class="sc0"> </span><span class="sc11">DataExchange</span><span class="sc10">.</span><span class="sc11">BKWD_CMD</span><span class="sc10">:</span><span class="sc0">
+                        </span><span class="sc5">if</span><span class="sc0"> </span><span class="sc10">(!</span><span class="sc11">isNxtStop</span><span class="sc10">)</span><span class="sc0">
+                        </span><span class="sc10">{</span><span class="sc0">   </span><span class="sc11">centreMotor</span><span class="sc10">.</span><span class="sc11">rotate</span><span class="sc10">(</span><span class="sc11">getDeltaPos</span><span class="sc10">(</span><span class="sc11">newPos</span><span class="sc10">,</span><span class="sc11">curPos</span><span class="sc10">));</span><span class="sc0"> </span><span class="sc10">}</span><span class="sc0">
+                        </span><span class="sc5">break</span><span class="sc10">;</span><span class="sc0">
+                    </span><span class="sc5">default</span><span class="sc10">:</span><span class="sc0">
+                        </span><span class="sc5">break</span><span class="sc10">;</span><span class="sc0">
+                    </span><span class="sc10">};</span><span class="sc0"> </span><span class="sc2">// switch case
+</span><span class="sc0">                </span><span class="sc10">}</span><span class="sc0"> </span><span class="sc2">// if (old != new)
+</span><span class="sc0">                </span><span class="sc5">else</span><span class="sc0">
+                </span><span class="sc10">{</span><span class="sc0">   </span><span class="sc11">centreMotor</span><span class="sc10">.</span><span class="sc11">flt</span><span class="sc10">();</span><span class="sc0"> </span><span class="sc10">}</span><span class="sc0">
+
+                </span><span class="sc5">try</span><span class="sc0"> </span><span class="sc10">{</span><span class="sc0">
+                    </span><span class="sc2">// thread going to sleep
+</span><span class="sc0">                    </span><span class="sc11">ManageNxtSteering</span><span class="sc10">.</span><span class="sc11">sleep</span><span class="sc10">(</span><span class="sc4">50</span><span class="sc10">);</span><span class="sc0">
+                </span><span class="sc10">}</span><span class="sc0"> 
+                </span><span class="sc5">catch</span><span class="sc0"> </span><span class="sc10">(</span><span class="sc11">InterruptedException</span><span class="sc0"> </span><span class="sc11">e</span><span class="sc10">)</span><span class="sc0"> 
+                </span><span class="sc10">{</span><span class="sc0">
+                    </span><span class="sc11">e</span><span class="sc10">.</span><span class="sc11">printStackTrace</span><span class="sc10">();</span><span class="sc0">
+                    </span><span class="sc11">LCD</span><span class="sc10">.</span><span class="sc11">drawString</span><span class="sc10">(</span><span class="sc6">"EX-6:"</span><span class="sc10">,</span><span class="sc4">0</span><span class="sc10">,</span><span class="sc4">5</span><span class="sc10">);</span><span class="sc0">
+                    </span><span class="sc11">LCD</span><span class="sc10">.</span><span class="sc11">refresh</span><span class="sc10">();</span><span class="sc0">  
+                </span><span class="sc10">}</span><span class="sc0"> 
+
+            </span><span class="sc10">}</span><span class="sc0"> </span><span class="sc2">// if (new != EXIT_CMD)
+</span><span class="sc0">            </span><span class="sc5">else</span><span class="sc0">
+            </span><span class="sc10">{</span><span class="sc0">
+                </span><span class="sc5">if</span><span class="sc0"> </span><span class="sc10">(</span><span class="sc11">newCmd</span><span class="sc0"> </span><span class="sc10">==</span><span class="sc0"> </span><span class="sc11">DataExchange</span><span class="sc10">.</span><span class="sc11">EXIT_CMD</span><span class="sc10">)</span><span class="sc0">
+                </span><span class="sc10">{</span><span class="sc0">
+                    </span><span class="sc11">centreMotor</span><span class="sc10">.</span><span class="sc11">stop</span><span class="sc10">();</span><span class="sc0"> </span><span class="sc1">/* stop motor */</span><span class="sc0">
+                    </span><span class="sc5">break</span><span class="sc10">;</span><span class="sc0">              </span><span class="sc1">/* exit while loop */</span><span class="sc0">
+                </span><span class="sc10">}</span><span class="sc0">
+            </span><span class="sc10">}</span><span class="sc0">
+        </span><span class="sc10">}</span><span class="sc0"> </span><span class="sc2">// while loop
+</span><span class="sc0">
+        </span><span class="sc11">DEObj</span><span class="sc10">.</span><span class="sc11">setNXTdone</span><span class="sc10">(</span><span class="sc5">true</span><span class="sc10">);</span><span class="sc0">
+    </span><span class="sc10">}</span><span class="sc0">
+</span><span class="sc10">};</span><span class="sc0">
+</span></div></body>
+</html>
